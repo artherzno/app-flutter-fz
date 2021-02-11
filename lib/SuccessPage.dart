@@ -87,9 +87,10 @@ class SuccessPage extends StatelessWidget {
                         Text(
                           buttonTitle + '. ' + jobName,
                           style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 22,
                               fontWeight: FontWeight.w500,
                               height: 1.2),
+                          textAlign: TextAlign.center,
                         ),
                         SizedBox(
                           height: 20,

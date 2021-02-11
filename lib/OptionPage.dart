@@ -112,11 +112,7 @@ class _OptionInnerState extends State<OptionInner> {
                 Text(
                   '${widget.buttonTitle}. ${widget.jobName}',
                   style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    height: 1.2,
-                    color: HexColor.fromHex('#002358'),
-                  ),
+                      fontSize: 22, fontWeight: FontWeight.w500, height: 1.2),
                   textAlign: TextAlign.center,
                 ),
                 Row(
@@ -255,9 +251,42 @@ class _OptionInnerState extends State<OptionInner> {
                       Text(
                         '${widget.buttonTitle}. ${widget.jobName}',
                         style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 22,
                             fontWeight: FontWeight.w500,
                             height: 1.2),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        'กรุณาเลือกวันจองคิว',
+                        style: TextStyle(fontSize: 20),
+                        textAlign: TextAlign.left,
+                      ),
+                      Text(
+                        '- (วันที่ปัจจุบัน: 11/02/2021) -',
+                        style: TextStyle(fontSize: 16),
+                        textAlign: TextAlign.left,
+                      ),
+                      Text(
+                        'หมายเหตุ: จองคิวล่วงหน้าได้ไม่เกิน 30 วัน',
+                        textAlign: TextAlign.left,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        'กรุณาเลือกเวลาจองคิว',
+                        style: TextStyle(fontSize: 20),
+                        textAlign: TextAlign.left,
+                      ),
+                      Text(
+                        'หมายเหตุ: เวลาทำการ 08:00 น. - 16:00 น.',
+                        textAlign: TextAlign.left,
+                      ),
+                      SizedBox(
+                        height: 10,
                       ),
                       FlatButton(
                         padding: EdgeInsets.all(0.0),

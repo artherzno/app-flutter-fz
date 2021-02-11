@@ -6,13 +6,15 @@ import 'SuccessPage.dart';
 class QrPage extends StatelessWidget {
   final String dataGen, jobName, buttonTitle;
 
-  QrPage({Key key, @required this.dataGen, this.jobName, this.buttonTitle}) : super(key: key);
+  QrPage({Key key, @required this.dataGen, this.jobName, this.buttonTitle})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'FZ Smart Que',
-      home: QrGenerator(dataGen: dataGen, jobName: jobName, buttonTitle: buttonTitle),
+      home: QrGenerator(
+          dataGen: dataGen, jobName: jobName, buttonTitle: buttonTitle),
       theme: new ThemeData(
           fontFamily: 'Kanit',
           textTheme: Theme.of(context).textTheme.apply(
@@ -27,7 +29,8 @@ class QrPage extends StatelessWidget {
 class QrGenerator extends StatefulWidget {
   final String dataGen, jobName, buttonTitle;
 
-  QrGenerator({Key key, @required this.dataGen, this.jobName, this.buttonTitle}) : super(key: key);
+  QrGenerator({Key key, @required this.dataGen, this.jobName, this.buttonTitle})
+      : super(key: key);
 
   @override
   _QrGeneratorState createState() => _QrGeneratorState();
@@ -42,7 +45,9 @@ class _QrGeneratorState extends State<QrGenerator> {
         child: Container(
           constraints: BoxConstraints.expand(),
           decoration: BoxDecoration(
-            image: DecorationImage(fit: BoxFit.cover, image: AssetImage('assets/images/bg-aot.png')),
+            image: DecorationImage(
+                fit: BoxFit.cover,
+                image: AssetImage('assets/images/bg-aot.png')),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -92,14 +97,68 @@ class _QrGeneratorState extends State<QrGenerator> {
                 child: Container(
                   padding: EdgeInsets.all(15),
                   constraints: BoxConstraints.expand(),
-                  decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20))),
                   child: Column(
                     children: [
                       Text(
                         '${widget.buttonTitle}. ${widget.jobName}',
-                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, height: 1.2),
+                        style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.w500,
+                            height: 1.2),
+                        textAlign: TextAlign.center,
                       ),
-                      Text(widget.dataGen)
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.baseline,
+                        children: [
+                          Text(
+                            'จองคิววันที่ ',
+                            style: TextStyle(
+                              fontSize: 20,
+                            ),
+                          ),
+                          Text(
+                            '12/02/2021',
+                            style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.w500,
+                                color: HexColor.fromHex('#4472C4')),
+                          ),
+                          Text(
+                            ' เวลา ',
+                            style: TextStyle(
+                              fontSize: 20,
+                            ),
+                          ),
+                          Text(
+                            '08.00',
+                            style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.w500,
+                                color: HexColor.fromHex('#4472C4')),
+                          ),
+                          Text(
+                            ' น.',
+                            style: TextStyle(
+                              fontSize: 20,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Text(widget.dataGen),
+                      Text(
+                        'กรุณาบันทึก QR Code นี้ เพื่อใช้ยืนยันการจองคิวล่วงหน้า ภายใน 10 นาที ก่อนเวลานัดหมายที่เครื่องออกบัตรคิว ณ เขตปลอดอากร ณ ท่าอากาศยานสุวรรณภูมิ',
+                        style: TextStyle(fontSize: 16),
+                        textAlign: TextAlign.center,
+                      )
                     ],
                   ),
                 ),
@@ -126,10 +185,7 @@ class _QrGeneratorState extends State<QrGenerator> {
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             gradient: LinearGradient(
-              colors: [
-                Color(0xff64B6FF),
-                Color(0xff374ABE)
-              ],
+              colors: [Color(0xff64B6FF), Color(0xff374ABE)],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
             ),
