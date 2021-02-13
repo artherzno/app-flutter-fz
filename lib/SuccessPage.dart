@@ -25,9 +25,7 @@ class SuccessPage extends StatelessWidget {
           child: Container(
             constraints: BoxConstraints.expand(),
             decoration: BoxDecoration(
-              image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: AssetImage('assets/images/bg-aot.png')),
+              image: DecorationImage(fit: BoxFit.cover, image: AssetImage('assets/images/bg-aot.jpg')),
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -38,6 +36,16 @@ class SuccessPage extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      Container(
+                        height: 20.0,
+                        width: 50.0,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage('assets/images/logo-aot-w.png'),
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                      ),
                       Text(
                         'FZ Smart Que',
                         style: TextStyle(
@@ -55,7 +63,7 @@ class SuccessPage extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        'By Airports of Thailand Public Co.,Ltd. (v.1.0.1).',
+                        'By Airports of Thailand Public Co.,Ltd. (v.1.0.2).',
                         style: TextStyle(
                           height: 0.8,
                           fontSize: 10,
@@ -77,19 +85,12 @@ class SuccessPage extends StatelessWidget {
                   child: Container(
                     padding: EdgeInsets.all(15),
                     constraints: BoxConstraints.expand(),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(20),
-                            topRight: Radius.circular(20))),
+                    decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))),
                     child: Column(
                       children: [
                         Text(
                           buttonTitle + '. ' + jobName,
-                          style: TextStyle(
-                              fontSize: 22,
-                              fontWeight: FontWeight.w500,
-                              height: 1.2),
+                          style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500, height: 1.2),
                           textAlign: TextAlign.center,
                         ),
                         SizedBox(
@@ -98,38 +99,35 @@ class SuccessPage extends StatelessWidget {
                         Text(
                           'บันทึก QR Code เรียบร้อย',
                           style: TextStyle(
-                              fontSize: 28,
-                              fontWeight: FontWeight.w400,
-                              color: HexColor.fromHex('#3BB7E8')),
+                            height: 1.2,
+                            fontSize: 28,
+                            fontWeight: FontWeight.w400,
+                            color: HexColor.fromHex('#4472C4'),
+                          ),
+                          textAlign: TextAlign.center,
                         ),
                         SizedBox(
                           height: 20,
                         ),
                         Text(
                           'บริษัท ท่าอากาศยานไทย จำกัด (มหาชน)',
-                          style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w400,
-                              color: HexColor.fromHex('#002358')),
+                          style: TextStyle(height: 1.2, fontSize: 18, fontWeight: FontWeight.w400, color: HexColor.fromHex('#002358')),
                         ),
                         Text(
                           'ขอขอบคุณที่ใช้บริการ',
-                          style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w400,
-                              color: HexColor.fromHex('#002358')),
+                          style: TextStyle(height: 1.2, fontSize: 18, fontWeight: FontWeight.w400, color: HexColor.fromHex('#002358')),
                         ),
                         SizedBox(
                           height: 20,
                         ),
                         FlatButton(
+                          // minWidth: double.infinity,
                           padding: EdgeInsets.all(0.0),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20)),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => MyApp()),
+                              MaterialPageRoute(builder: (context) => HomePage()),
                             );
                           },
                           child: Ink(
@@ -150,8 +148,7 @@ class SuccessPage extends StatelessWidget {
                               alignment: Alignment.center,
                               child: Text(
                                 'กลับหน้าแรก',
-                                style: TextStyle(
-                                    fontSize: 20, color: Colors.grey[600]),
+                                style: TextStyle(fontSize: 20, color: Colors.grey[600]),
                               ),
                             ),
                           ),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'GetData.dart';
 import 'OptionPage.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 void main() {
   runApp(MyApp());
@@ -34,8 +35,15 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
+    getPermission();
     super.initState();
     getAPI();
+  }
+
+  Future<void> getPermission() async {
+    if (!(await Permission.storage.request().isGranted)) {
+      await Permission.storage.request();
+    }
   }
 
   // Set Basic Auth
@@ -47,15 +55,14 @@ class _HomePageState extends State<HomePage> {
   Future<GetData> getAPI() async {
     var url = 'https://aotkios.web.app/api/v1/getservice';
     var response = await http.post(url, headers: {
-      'authorization': basicAuthenticationHeader(
-          'aotsmartq', 'RurFebScfw6u2wYeZL6a5rL5YKKHV5eG'),
+      'authorization': basicAuthenticationHeader('aotsmartq', 'RurFebScfw6u2wYeZL6a5rL5YKKHV5eG'),
       'x-api-key': 'bVYLDtJHzY4meuGatFmmqxufbPudY3H3'
     }, body: {
       'branchID': '0001'
     });
 
     _dataFromAPI = getDataFromJson(response.body);
-
+    // print(response.body);
     return _dataFromAPI;
   }
 
@@ -66,9 +73,7 @@ class _HomePageState extends State<HomePage> {
         child: Container(
           constraints: BoxConstraints.expand(),
           decoration: BoxDecoration(
-            image: DecorationImage(
-                fit: BoxFit.cover,
-                image: AssetImage('assets/images/bg-aot.png')),
+            image: DecorationImage(fit: BoxFit.cover, image: AssetImage('assets/images/bg-aot.jpg')),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -79,6 +84,16 @@ class _HomePageState extends State<HomePage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    Container(
+                      height: 16.0,
+                      width: 40.0,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/images/logo-aot-w.png'),
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    ),
                     Text(
                       'FZ Smart Que',
                       style: TextStyle(
@@ -96,7 +111,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     Text(
-                      'By Airports of Thailand Public Co.,Ltd. (v.1.0.1).',
+                      'By Airports of Thailand Public Co.,Ltd. (v.1.0.2).',
                       style: TextStyle(
                         height: 0.8,
                         fontSize: 10,
@@ -119,66 +134,45 @@ class _HomePageState extends State<HomePage> {
                 child: Container(
                   padding: EdgeInsets.all(15),
                   constraints: BoxConstraints.expand(),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          topRight: Radius.circular(20))),
+                  decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))),
                   child: Column(
                     children: [
                       Text(
                         'ระบบจองคิวล่วงหน้า',
-                        style: TextStyle(
-                            fontSize: 28,
-                            fontWeight: FontWeight.w400,
-                            color: HexColor.fromHex('#002358')),
+                        style: TextStyle(fontSize: 28, fontWeight: FontWeight.w400, color: HexColor.fromHex('#002358')),
+                      ),
+                      SizedBox(
+                        height: 10,
                       ),
                       Flexible(
                         child: FutureBuilder(
                           future: getAPI(),
-                          builder: (BuildContext context,
-                              AsyncSnapshot<dynamic> snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.done) {
+                          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                            if (snapshot.connectionState == ConnectionState.done) {
                               var result = snapshot.data;
                               return ListView.builder(
                                   itemCount: result.data.length,
                                   // ignore: missing_return
                                   itemBuilder: (BuildContext context, i) {
-                                    if (result.data[i].enable == 1 &&
-                                        result.data[i].order < 5) {
+                                    if (result.data[i].enable == 1 && result.data[i].order < 5) {
                                       // Main Button
                                       return Column(
                                         children: [
                                           FlatButton(
+                                            // minWidth: double.infinity,
                                             padding: EdgeInsets.all(0.0),
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(20)),
+                                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                                             onPressed: () {
                                               Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        OptionPage(
-                                                            branchId: result
-                                                                .info.branchId,
-                                                            branchName: result
-                                                                .info
-                                                                .branchName,
-                                                            keyValue: result
-                                                                .data[i].key,
-                                                            jobName: result
-                                                                .data[i].name,
-                                                            buttonTitle: result
-                                                                .data[i]
-                                                                .buttonTitle)),
+                                                  builder: (context) => OptionPage(branchId: result.info.branchId, branchName: result.info.branchName, keyValue: result.data[i].key, jobName: result.data[i].name, buttonTitle: result.data[i].buttonTitle),
+                                                ),
                                               );
                                             },
                                             child: Ink(
                                               height: 60,
-                                              padding: EdgeInsets.fromLTRB(
-                                                  6, 4, 6, 4),
+                                              padding: EdgeInsets.fromLTRB(6, 4, 6, 4),
                                               decoration: BoxDecoration(
                                                   gradient: LinearGradient(
                                                     colors: [
@@ -188,32 +182,21 @@ class _HomePageState extends State<HomePage> {
                                                     begin: Alignment.topCenter,
                                                     end: Alignment.bottomCenter,
                                                   ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          30.0)),
+                                                  borderRadius: BorderRadius.circular(30.0)),
                                               child: Row(
                                                 children: [
                                                   Container(
                                                       width: 50,
                                                       height: 50,
                                                       decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(50),
-                                                        color: HexColor.fromHex(
-                                                            result.data[i]
-                                                                .buttonColor),
+                                                        borderRadius: BorderRadius.circular(50),
+                                                        color: HexColor.fromHex(result.data[i].buttonColor),
                                                       ),
                                                       child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .fromLTRB(
-                                                                4, 6, 4, 6),
+                                                        padding: const EdgeInsets.fromLTRB(4, 6, 4, 6),
                                                         child: Text(
-                                                          result.data[i]
-                                                              .buttonTitle,
-                                                          textAlign:
-                                                              TextAlign.center,
+                                                          result.data[i].buttonTitle,
+                                                          textAlign: TextAlign.center,
                                                           style: TextStyle(
                                                             fontSize: 24,
                                                           ),
@@ -221,24 +204,19 @@ class _HomePageState extends State<HomePage> {
                                                       )),
                                                   Flexible(
                                                     child: Container(
-                                                      padding:
-                                                          EdgeInsets.fromLTRB(
-                                                              6, 0, 6, 0),
+                                                      padding: EdgeInsets.fromLTRB(6, 0, 6, 0),
                                                       child: Text(
                                                         result.data[i].name,
                                                         style: TextStyle(
                                                           height: 1.2,
                                                           color: Colors.white,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          fontSize: 18,
+                                                          fontWeight: FontWeight.w500,
+                                                          fontSize: 16,
                                                           shadows: [
                                                             Shadow(
                                                               blurRadius: 1.0,
-                                                              color:
-                                                                  Colors.black,
-                                                              offset: Offset(
-                                                                  1.0, 1.0),
+                                                              color: Colors.black,
+                                                              offset: Offset(1.0, 1.0),
                                                             ),
                                                           ],
                                                         ),
