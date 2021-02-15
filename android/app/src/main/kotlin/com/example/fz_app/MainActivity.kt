@@ -1,4 +1,4 @@
-package com.example.fz_app
+package com.ddconnect.fz
 
 import io.flutter.embedding.android.FlutterActivity
 
